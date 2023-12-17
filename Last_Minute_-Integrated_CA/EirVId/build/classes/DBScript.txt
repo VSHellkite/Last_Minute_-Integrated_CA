@@ -1,0 +1,94 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema Movies
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema Movies
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `Movies` DEFAULT CHARACTER SET utf8 ;
+USE `Movies` ;
+
+-- -----------------------------------------------------
+-- Table `Movies`.`User`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Movies`.`User` ;
+
+CREATE TABLE IF NOT EXISTS `Movies`.`User` (
+  `UserId` INT NOT NULL,
+  `Username` VARCHAR(30) NULL,
+  `Login` VARCHAR(20) NULL,
+  `Password` VARCHAR(20) NULL,
+  PRIMARY KEY (`UserId`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Movies`.`Movies`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Movies`.`Movies` ;
+
+CREATE TABLE IF NOT EXISTS `Movies`.`Movies` (
+  `MovieId` INT NOT NULL,
+  `OriginalLanguage` VARCHAR(45) NULL,
+  `OriginalTitle` VARCHAR(45) NULL,
+  `Overview` VARCHAR(1000) NULL,
+  `Popularity` DOUBLE NULL,
+  `ReleseDate` DATE NULL,
+  `Runtime` INT NULL,
+  `Tag` VARCHAR(1000) NULL,
+  `Title` VARCHAR(45) NULL,
+  `VoteAvg` DOUBLE NULL,
+  `VoteCount` INT NULL,
+  `Price` DOUBLE NULL,
+  PRIMARY KEY (`MovieId`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Movies`.`UserMovieList`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Movies`.`UserMovieList` ;
+
+CREATE TABLE IF NOT EXISTS `Movies`.`UserMovieList` (
+  `UserId` INT NOT NULL,
+  `MovieId` INT NOT NULL,
+  `Title` VARCHAR(45) NULL,
+  `UserVote` DECIMAL(10) NULL,
+  PRIMARY KEY (`UserId`, `MovieId`),
+  CONSTRAINT `fk_UserMovieList_User`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `Movies`.`User` (`UserId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_UserMovieList_Movies1`
+    FOREIGN KEY (`MovieId`)
+    REFERENCES `Movies`.`Movies` (`MovieId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_UserMovieList_User_idx` ON `Movies`.`UserMovieList` (`UserId` ASC) VISIBLE;
+
+CREATE INDEX `fk_UserMovieList_Movies1_idx` ON `Movies`.`UserMovieList` (`MovieId` ASC) VISIBLE;
+
+SET SQL_MODE = '';
+DROP USER IF EXISTS username;
+SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+CREATE USER 'username' IDENTIFIED BY 'password';
+
+SET SQL_MODE = '';
+DROP USER IF EXISTS admin;
+SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+CREATE USER 'admin' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON movies.* TO 'admin'@'%';
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
