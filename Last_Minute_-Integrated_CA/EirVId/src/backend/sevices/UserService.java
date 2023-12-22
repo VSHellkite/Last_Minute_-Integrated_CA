@@ -1,7 +1,6 @@
 
 package backend.Sevices;
 
-import java.util.List;
 import backend.models.User;
 
     public interface UserService {

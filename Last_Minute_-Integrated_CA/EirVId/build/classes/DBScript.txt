@@ -20,7 +20,7 @@ USE `Movies` ;
 DROP TABLE IF EXISTS `Movies`.`User` ;
 
 CREATE TABLE IF NOT EXISTS `Movies`.`User` (
-  `UserId` INT NOT NULL,
+  `UserId` INT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(30) NULL,
   `Login` VARCHAR(20) NULL,
   `Password` VARCHAR(20) NULL,
@@ -35,14 +35,14 @@ DROP TABLE IF EXISTS `Movies`.`Movies` ;
 
 CREATE TABLE IF NOT EXISTS `Movies`.`Movies` (
   `MovieId` INT NOT NULL,
-  `OriginalLanguage` VARCHAR(45) NULL,
+  `OriginalLanguage` VARCHAR(150) NULL,
   `OriginalTitle` VARCHAR(45) NULL,
   `Overview` VARCHAR(1000) NULL,
   `Popularity` DOUBLE NULL,
   `ReleseDate` DATE NULL,
   `Runtime` INT NULL,
   `Tag` VARCHAR(1000) NULL,
-  `Title` VARCHAR(45) NULL,
+  `Title` VARCHAR(150) NULL,
   `VoteAvg` DOUBLE NULL,
   `VoteCount` INT NULL,
   `Price` DOUBLE NULL,
@@ -76,11 +76,6 @@ ENGINE = InnoDB;
 CREATE INDEX `fk_UserMovieList_User_idx` ON `Movies`.`UserMovieList` (`UserId` ASC) VISIBLE;
 
 CREATE INDEX `fk_UserMovieList_Movies1_idx` ON `Movies`.`UserMovieList` (`MovieId` ASC) VISIBLE;
-
-SET SQL_MODE = '';
-DROP USER IF EXISTS username;
-SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-CREATE USER 'username' IDENTIFIED BY 'password';
 
 SET SQL_MODE = '';
 DROP USER IF EXISTS admin;

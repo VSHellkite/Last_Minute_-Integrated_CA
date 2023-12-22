@@ -1,7 +1,6 @@
 
 package backend.Sevices;
 
-import java.util.List;
 import backend.models.User;
 import backend.repository.UserRepositoryImpl;
 import backend.repository.UserRepository;
@@ -19,7 +18,8 @@ import backend.repository.UserRepository;
     @Override
     public User createUser(User newUser) {
         if (repository.isUserExists(newUser.getUserlogin())) {
-            throw new RuntimeException("User already exists. Please select different login.");
+            System.out.println("User already exists. Please select different login.");
+            return null;
         }
         
         return repository.createUser(newUser);

@@ -11,6 +11,7 @@ import java.sql.Statement;
 
 
 
+
 public class UserRepositoryImpl implements UserRepository {
 
     @Override
@@ -24,7 +25,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             conn = Database.getConnection();
 
-            statement = conn.prepareStatement("SELECT USERID, USERLOGIN, PASSWORD, USERNAME  FROM user where USERLOGIN = ? AND PASSWORD = ?");
+            statement = conn.prepareStatement("SELECT USERID, LOGIN, PASSWORD, USERNAME  FROM user where LOGIN = ? AND PASSWORD = ?");
 
             statement.setString(1, userlogin);
             statement.setString(2, password);
@@ -38,7 +39,7 @@ public class UserRepositoryImpl implements UserRepository {
                         resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4),
+                        resultSet.getString(4)
                 );
             }
 
@@ -118,11 +119,11 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             conn = Database.getConnection();
 
-            statement = conn.prepareStatement("insert into user (USERID, USERLOGIN, PASSWORD, NAME, SURNAME, USERROLE) values (?, ?, ?, ?, ?, ?)");
-            statement.setInt(1, user.getUserid());
-            statement.setString(2, user.getUserlogin());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getUsername());
+            statement = conn.prepareStatement("insert into user (LOGIN, PASSWORD, USERNAME) values (?, ?, ?)");
+            //statement.setInt(1, user.getUserid());
+            statement.setString(1, user.getUserlogin());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getUsername());
 
             statement.executeUpdate();
 
@@ -154,7 +155,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             conn = Database.getConnection();
 
-            statement = conn.prepareStatement("SELECT USERID, USERLOGIN, PASSWORD, USERNAME from user where USERLOGIN = ?");
+            statement = conn.prepareStatement("SELECT USERID, LOGIN, PASSWORD, USERNAME from user where LOGIN = ?");
 
             statement.setString(1, userlogin);
             
@@ -165,7 +166,7 @@ public class UserRepositoryImpl implements UserRepository {
                         resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4),
+                        resultSet.getString(4)
                 );
             }
 
